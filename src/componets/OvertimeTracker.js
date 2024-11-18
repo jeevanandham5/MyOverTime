@@ -15,13 +15,20 @@ import {
   Switch,
   Divider,
   ColorPicker,
+  Typography,
 } from "antd";
-import { SettingOutlined } from "@ant-design/icons";
+import {
+  CoffeeOutlined,
+  FieldTimeOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+import QR from "../QR.jpeg";
 
 const OvertimeTracker = () => {
   const [entries, setEntries] = useState([]);
   const [hourlyRate, setHourlyRate] = useState(0.4); // Default rate in BHD
   const [hours, setHours] = useState("");
+  const [coffee, setCoffee] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
   const [themeModalVisible, setThemeModalVisible] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(new Date()); // Tracks the selected month
@@ -125,6 +132,17 @@ const OvertimeTracker = () => {
       }}
     >
       <Layout>
+        <Layout.Header
+          style={{ background: primaryColor, color: "white" }}
+          className="flex items-center justify-between"
+        >
+          <div className="flex items-center gap-5">
+            <FieldTimeOutlined style={{ fontSize: "30px" }} />
+            <Typography className=" font-extrabold text-white">
+              MY-OT
+            </Typography>
+          </div>
+        </Layout.Header>
         <div className="p-4 max-w-4xl mx-auto">
           <Card
             title={`Summary for ${selectedMonth.toLocaleString("default", {
@@ -228,6 +246,36 @@ const OvertimeTracker = () => {
             onClick={() => setThemeModalVisible(true)}
           ></FloatButton>
         </div>
+        <Layout.Footer>
+          <div className="flex items-center justify-between">
+            <p>
+              App by -
+              <a
+                style={{ color: primaryColor }}
+                href="https://github.com/jeevanandham5"
+              >
+                jeevanandham
+              </a>
+            </p>
+            <Button
+              icon={<CoffeeOutlined />}
+              iconPosition={"end"}
+              onClick={() => setCoffee(true)}
+            >
+              buy me a coffee
+            </Button>
+            <Modal
+              title="Buy Me A Coffee"
+              open={coffee}
+              onOk={() => setCoffee(false)}
+              onCancel={() => setCoffee(false)}
+            >
+              <div>
+                <img src={QR} alt="qr" className=" rounded-lg"></img>
+              </div>
+            </Modal>
+          </div>
+        </Layout.Footer>
       </Layout>
     </ConfigProvider>
   );
